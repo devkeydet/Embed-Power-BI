@@ -1,0 +1,35 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html style="height: 98%">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>FedBizApps Embed Power BI</title>
+    <script src="https://cdn.jsdelivr.net/npm/powerbi-client@2.4.7/dist/powerbi.min.js"></script>
+    <script>
+        function onLoad() {
+            var accessToken = "@ViewData["Token"]";
+            var config = {
+                type: 'report',
+                accessToken: accessToken,
+                embedUrl: "@Html.Raw(ViewData["EmbedUrl"])",
+                settings: {
+                    filterPaneEnabled: @ViewData["FilterPaneEnabled"].ToString().ToLower(),
+                    navContentPaneEnabled: @ViewData["NavContentPaneEnabled"].ToString().ToLower()
+                }
+            };
+            var reportContainer = document.getElementById('reportContainer');
+// ReSharper disable once UnusedLocals
+// ReSharper disable once UseOfImplicitGlobalInFunctionScope
+            var report = powerbi.embed(reportContainer, config);
+        }
+    </script>
+</head>
+<body onload="onLoad()" style="height: 100%">
+    <div id="reportContainer" style="height: 100%"></div>
+</body>
+</html>
